@@ -5,17 +5,17 @@ def sinf(a):
 	sn=[]
 	si=[]
 	o=[]
+	print("Input Lattice constant")
+	L=float(input())
 	for line in g:
 		linecount+=1
 		if linecount <=5:
 			continue
 		elif linecount == 6:
-			temp=line.split()
-			s.extend(temp)
+			s.extend(line.split())
 			continue
 		elif linecount == 7:
-			temp=line.split()
-			sn.extend(temp)
+			sn.extend(line.split())
 			#si=[[0 for i in range(3)] for j in range(int(sn[0]))]
 			#o=[[0 for i in range(3)] for j in range(int(sn[1]))]
 			continue
@@ -23,12 +23,12 @@ def sinf(a):
 			continue
 		elif linecount <(10+int(sn[0])):
 			t=line.split()
-			temp=[float(i)*10.32 for i in t[:3]]
+			temp=[float(i)*L for i in t[:3]]
 			si.append(temp)
 			continue
 		elif linecount<(34+int(sn[1])):
 			t=line.split()
-			temp=[float(i)*10.32 for i in t[:3]]
+			temp=[float(i)*L for i in t[:3]]
 			o.append(temp)
 			continue
 	g.close()
