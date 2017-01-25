@@ -161,6 +161,10 @@ def ReadXDATCAR():
 			temp=osioang(Si,O)
 			for i in temp:
 				OSiO[i]=OSiO[i]+temp[i]
+			for i in SiOSi:
+				SiOSi[i]=SiOSi[i]/T
+			for i in OSiO:
+				OSiO[i]=OSiO[i]/T
 		Si=np.empty((0,3),float)
 		O=np.empty((0,3),float)
 		print(SiOSi)
