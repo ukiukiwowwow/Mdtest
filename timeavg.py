@@ -30,7 +30,7 @@ def osioang(si,o):
 				t2=[0]*3
 				#print(o2,"o2b")
 				#print(si[i],"si")
-				if(o1==o2):
+				if(o1[1]==o2[1]):
 					continue
 				for k in range(3):
 					t1[k]=o1[k]-si[i][k]
@@ -44,11 +44,12 @@ def osioang(si,o):
 				#print(o2,"o2a")
 		if(ang!=0):
 			count+=1
-		sumav+=ang/(l)
-	avang=sumav/count
-	print(avang)
-	#print(sorted(countang))
-	return sorted(countang)
+		
+		d=defaultdict(int)
+		for i in sorted(countang):
+			d[i]+=1
+	
+	return d
 	
 def siosiang(si,o):
 	count=0
@@ -96,7 +97,7 @@ def siosiang(si,o):
 	for i in sorted(countang):
 		d[i]+=1
 	
-	return sorted(d)
+	return d
 	
 """	
 def angdis(a):
@@ -121,7 +122,8 @@ def ReadXDATCAR():
 	L=float(input())
 	print("Input total time step ")
 	T=int(input())
-	
+	SiOSi=defaultdict(int)
+	OSiO=defaultdict(int)
 	with open("testXDATCAR","r") as xdat:
 		for i in range(6):
 			print(xdat.readline())
@@ -134,8 +136,12 @@ def ReadXDATCAR():
 			linecount+=1
 			if(linecount%N==1):
 				if Si.any()==True:
-					SiOSi=siosiang(Si,O)
-					print(type(SiOSi))
+					temp=siosiang(Si,O)
+					for i in temp:
+						SiOSi[i]=SiOSi[i]+temp[i]
+					temp=osioang(Si,O)
+					for i in temp:
+						OSiO[i]=OSiO[i]+temp[i]
 				#ここでF(list)にする
 				
 				Si=np.empty((0,3),float)
@@ -147,9 +153,16 @@ def ReadXDATCAR():
 			elif(linecount%N<1+Sinum+Onum):
 				O=np.append(O,L*np.array([list(map(float,i.split()))]),axis=0)
 				continue
-		#if Si.any()==True:
+		if Si.any()==True:
 		#ここでF(list)にする
-		
+			temp=siosiang(Si,O)
+			for i in temp:
+				SiOSi[i]=SiOSi[i]+temp[i]
+			temp=osioang(Si,O)
+			for i in temp:
+				OSiO[i]=OSiO[i]+temp[i]
 		Si=np.empty((0,3),float)
 		O=np.empty((0,3),float)
+		print(SiOSi)
+		print(OSiO)
 ReadXDATCAR()
