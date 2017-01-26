@@ -1,9 +1,7 @@
 import math
-import sys
-import collections
 from collections import defaultdict
 import numpy as np
-import matplotlib.pyplot as plt
+import re
 def osioang(si,o):
 	count=0
 	sumav=0
@@ -101,7 +99,6 @@ def siosiang(si,o):
 	
 """	
 def angdis(a):
-
 	d=defaultdict(int)
 	print("Input to write file name")
 	n=input()
@@ -167,6 +164,30 @@ def ReadXDATCAR():
 				OSiO[i]=OSiO[i]/T
 		Si=np.empty((0,3),float)
 		O=np.empty((0,3),float)
-		print(SiOSi)
-		print(OSiO)
-ReadXDATCAR()
+	with open ("OSiOdis.dat","w") as osio,open("SiOSidis.dat","w") as siosi:
+		for k,v in sorted(OSiO.items()):
+			osio.write(str(k)+" "+str(v)+"\n")
+		for k,v in sorted(SiOSi.items()):
+			siosi.write(str(k)+" "+str(v)+"\n")
+	return OSiO,SiOSi
+
+
+def plotangdis(OSiO,SiOSi):
+	osioang,osiodis=zip(*sorted(OSiO.items()))
+	siosiang,siosidis=zip(*sorted(SiOSi.items()))
+	plt.plot(osioang,osiodis)
+	plt.savefig("osio.png")
+	plt.savefig("osio.eps")
+	plt.show()
+	plt.plot(siosiang,siosidis)
+	plt.savefig("siosi.png")
+	plt.savefig("siosi.eps")
+	plt.show()
+	
+if __name__=="__main__":
+	OSiO,SiOSi=ReadXDATCAR()
+	print("Do you plot angle distribution? [y/n]")
+	if re.compile("y",re.IGNORECASE).match(input().split()[0]) != None:
+		import matplotlib.pyplot as plt
+		plotangdis(OSiO,SiOSi)
+		
