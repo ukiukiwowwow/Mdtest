@@ -2,6 +2,7 @@ import math
 from collections import defaultdict
 import numpy as np
 import re
+import os
 def osioang(si,o):
 	count=0
 	sumav=0
@@ -164,7 +165,7 @@ def ReadXDATCAR():
 				OSiO[i]=OSiO[i]/T
 		Si=np.empty((0,3),float)
 		O=np.empty((0,3),float)
-	with open ("OSiOdis.dat","w") as osio,open("SiOSidis.dat","w") as siosi:
+	with open ("angledist/OSiOdis.dat","w") as osio,open("angledist/SiOSidis.dat","w") as siosi:
 		for k,v in sorted(OSiO.items()):
 			osio.write(str(k)+" "+str(v)+"\n")
 		for k,v in sorted(SiOSi.items()):
@@ -176,15 +177,16 @@ def plotangdis(OSiO,SiOSi):
 	osioang,osiodis=zip(*sorted(OSiO.items()))
 	siosiang,siosidis=zip(*sorted(SiOSi.items()))
 	plt.plot(osioang,osiodis)
-	plt.savefig("osio.png")
-	plt.savefig("osio.eps")
+	plt.savefig("angledist/osio.png")
+	plt.savefig("angledist/osio.eps")
 	plt.show()
 	plt.plot(siosiang,siosidis)
-	plt.savefig("siosi.png")
-	plt.savefig("siosi.eps")
+	plt.savefig("angledist/siosi.png")
+	plt.savefig("angledist/siosi.eps")
 	plt.show()
 	
 if __name__=="__main__":
+	os.mkdir("angledist")
 	OSiO,SiOSi=ReadXDATCAR()
 	print("Do you plot angle distribution? [y/n]")
 	if re.compile("y",re.IGNORECASE).match(input().split()[0]) != None:
