@@ -2,7 +2,7 @@ import numpy as np
 from copy import deepcopy
 def subMSD():
 	with open("XDATCAR","r") as f,open("cmSiMSD","w") as ps,open("cmOMSD","w") as po,open("cmMSD","w") as cM:
-		L=[[0 for i in range(3)]for j in range(3)]
+		L=np.array([[0 for i in range(3)]for j in range(3)])
 		for i in range(7):
 			line=f.readline()
 			if(i==2):

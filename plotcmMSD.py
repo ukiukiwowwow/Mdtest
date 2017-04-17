@@ -2,6 +2,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 def plotcmMSD():
 	with open("cmMSD","r") as c:
+		with ("XDATCAR","r") as x:
+			L=np.array([[0 for i in range(3)]for j in range(3)])
+			for i in range(7):
+				line=f.readline()
+				if(i==2):
+					L[0]=list(map(float,line.split()))
+				if(i==3):
+					L[1]=list(map(float,line.split()))
+				if(i==4):
+					L[2]=list(map(float,line.split()))
 		temp=np.empty((0,4), float)
 		for line in c:
 			temp=np.append(temp,np.array([list(map(float,line.split()))]),axis=0)
@@ -20,8 +30,11 @@ def plotcmMSD():
 		plt.show()
 		
 		print("Input Lattice param")
-		L=float(input())
+		temp=tc[1]*L[0]+tc[2]*L[1]+tc[3]*L[2]
+		
 		MSD=np.sum([[tc[j][i]*tc[j][i] for i in range(N)]for j in range(1,4)],axis=0)
+		MSD=np.sum([[temp[j][i]*temp[j][i] for i in range(N)]for j in range(1,4)],axis=0)
+		#aboveMSDis error
 		MSD=MSD*L**2
 		plt.plot(tc[0],MSD,label="cmMSD")
 		plt.legend(loc="lower right")

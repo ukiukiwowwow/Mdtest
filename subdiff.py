@@ -69,20 +69,31 @@ def cmdiff(flag=0):
 	with open("cmMSD","r") as cM,open("cmdiff.dat","w") as cd:
 		print("cm-selfdiffusion")
 		cd.write("cm-selfdiffusion\n")
+		with ("XDATCAR","r") as x:
+			L=np.array([[0 for i in range(3)]for j in range(3)])
+			for i in range(7):
+				line=f.readline()
+				if(i==2):
+					L[0]=list(map(float,line.split()))
+				if(i==3):
+					L[1]=list(map(float,line.split()))
+				if(i==4):
+					L[2]=list(map(float,line.split()))
 		if(flag==1):
 			import matplotlib.pyplot as plt
 			import numpy as np
 			temp=np.empty((0,2), float)
 		print("Input lattice parameter")
-		L=float(input())
 		linecount=0
 		for line in cM:
 			linecount+=1
 			if(linecount==1):
 				continue
 			time,x,y,z=list(map(float,line.split()))
-			r=np.dot(x,x)+np.dot(y,y)+np.dot(z,z)
-			r=r*L**2
+			r=x*L[0]+y*L[1]+z*L[2]
+			r=np.dot(r,r)
+			#r=np.dot(x,x)+np.dot(y,y)+np.dot(z,z)
+			#r=r*L**2
 			if(flag==1):
 				temp=np.append(temp,np.array([[time,(r/(6*time)*10)]]),axis=0)
 			if(linecount%5000==0):
