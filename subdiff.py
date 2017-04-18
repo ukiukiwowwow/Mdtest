@@ -132,4 +132,4 @@ if __name__=="__main__":
 	else:
 		flag=0
 	newdiff(flag)
-	cmdiff(flag)
+	#cmdiff(flag)
