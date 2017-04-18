@@ -44,7 +44,7 @@ def plotcmMSD():
 		plt.savefig('cmMSDliner.eps', dpi=150)
 		plt.savefig('cmMSDliner.png', dpi=150)
 		plt.tight_layout()
-		plt.show()
+		plt.clf()
 		
 		plt.plot(tc[0],MSD,label="cmMSD")
 		plt.legend(loc="lower right")
@@ -57,7 +57,8 @@ def plotcmMSD():
 		plt.savefig('cmMSDlog.eps', dpi=150)
 		plt.savefig('cmMSDlog.png', dpi=150)
 		plt.tight_layout()
-		plt.show()
+		plt.clf()
+		
 def plotMSD():
 	with open("cmSiMSD","r") as cS,open("cmOMSD","r") as cO:
 		temp=np.empty((0,2), float)
@@ -77,8 +78,7 @@ def plotMSD():
 		plt.savefig('SiOMSDliner.eps', dpi=150)
 		plt.savefig('SiOMSDliner.png', dpi=150)
 		plt.tight_layout()
-		plt.show()
-		
+		plt.clf()
 		plt.plot(ts[0],ts[1],label="Si")
 		plt.plot(to[0],to[1],label="O")
 		plt.legend(loc='lower right')
@@ -91,8 +91,8 @@ def plotMSD():
 		plt.savefig('SiOMSDlog.eps', dpi=150)
 		plt.savefig('SiOMSDlog.png', dpi=150)
 		plt.tight_layout()
-		plt.show()
+		plt.clf()
 		
 if __name__ =="__main__":
-	plotcmMSD()
+	#plotcmMSD()
 	plotMSD()

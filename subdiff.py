@@ -50,7 +50,7 @@ def newdiff(flag=0):
 			plt.savefig('Dliner.eps', dpi=150)
 			plt.savefig('Dliner.png', dpi=150)
 			plt.tight_layout()
-			plt.show()
+			plt.clf()
 			
 			plt.plot(Dsi[0],Dsi[1],label="Dsi")
 			plt.plot(Do[0],Do[1],label="Do")
@@ -64,7 +64,7 @@ def newdiff(flag=0):
 			plt.savefig('Dlog.eps', dpi=150)
 			plt.savefig('Dlog.png', dpi=150)
 			plt.tight_layout()
-			plt.show()
+			plt.clf()
 def cmdiff(flag=0):
 	with open("cmMSD","r") as cM,open("cmdiff.dat","w") as cd:
 		print("cm-selfdiffusion")
@@ -110,7 +110,7 @@ def cmdiff(flag=0):
 			plt.savefig('Dcmliner.eps', dpi=150)
 			plt.savefig('Dcmliner.png', dpi=150)
 			plt.tight_layout()
-			plt.show()
+			plt.clf()
 			
 			plt.plot(Dc[0],Dc[1],label="Dcm")
 			plt.legend(loc=1)
@@ -123,7 +123,7 @@ def cmdiff(flag=0):
 			plt.savefig('Dcmlog.eps', dpi=150)
 			plt.savefig('Dcmlog.png', dpi=150)
 			plt.tight_layout()
-			plt.show()
+			plt.clf()
 		
 if __name__=="__main__":
 	print("Do you want to plot D,type(y)")
