@@ -13,27 +13,13 @@ def subMSD():
 				L[2]=list(map(float,line.split()))
 			if(i==6):
 				Sinum,Onum=list(map(int,line.split()))
-		print(L)
+		print(L[0],L[1],L[2])
 		l=[]
 		l.append(np.sqrt(np.dot(L[0],L[0])))
 		l.append(np.sqrt(np.dot(L[1],L[1])))
 		l.append(np.sqrt(np.dot(L[2],L[2])))
 		linecount=0
-		"""
-		print("input lattice parameter")
-		L=float(input())
-		print("input number of species")
-		SN=int(input())
-		el=np.array([])
-		for i in range(SN):
-			print("{0} atom")
-			el=np.append(el,input())
-		"""
 		
-		
-		#L=10.23
-		#Sinum=24
-		#Onum=48
 		Sicur=np.empty((0,3), float)
 		Ocur=np.empty((0,3), float)
 		Sipre,Opre=[np.array([])for i in range(2)]
@@ -42,7 +28,7 @@ def subMSD():
 		cmMSD=np.zeros(3)
 		d=np.zeros(3)
 		#print("Input Total timestep")
-		Totalstep=100000#int(input())
+		Totalstep=int(input())
 		time=-0.001
 		Tlines=(Sinum+Onum+1)*(Totalstep)
 		for line in range(Tlines):
@@ -71,24 +57,24 @@ def subMSD():
 					cmMSD[2]=(np.sum(Oz,axis=0)+np.sum(Siz,axis=0))/(Sinum+Onum)
 					cM.write(str(time)+" "+str(cmMSD[0])+" "+str(cmMSD[1])+" "+str(cmMSD[2])+"\n")
 				if Sipre.any()==True:
-					Sir=np.array([[0,0,0]]*Sinum)
-					SiTotal=0
+					Sir=np.array([[0.1,0.1,0.1]]*Sinum)
+					
 					for i in range(Sinum):
 						Sir[i]=(Six[i]-cmMSD[0])*L[0]+(Siy[i]-cmMSD[1])*L[1]+(Siz[i]-cmMSD[2])*L[2]
 						SiTotal+=np.dot(Sir[i],Sir[i])
 					#Sir=np.sum(Six-cmMSD[0],axis=0)*L[0]+np.sum(Siy-cmMSD[1],axis=0)*L[1]+np.sum(Siz-cmMSD[2],axis=0)*L[2]
 					#Sir=(Six-cmMSD[0])*L[0]+(Siy-cmMSD[1])*L[1]+(Siz-cmMSD[2])*L[2]
-					Simsd=1/(Sinum)*SiTotal
+					Simsd=np.linalg.norm(Sir)**2/(Sinum)
 					ps.write(str(time)+" "+str(Simsd)+"\n")
 				if Opre.any()==True:
 					#Or=(Ox-cmMSD[0])*L[0]+(Oy-cmMSD[1])*L[1]+(Oz-cmMSD[2])*L[2]
 					#Or=np.sum(Ox-cmMSD[0],axis=0)*L[0]+np.sum(Oy-cmMSD[1],axis=0)*L[1]+np.sum(Oz-cmMSD[2],axis=0)*L[2]
-					OTotal=0
-					Or=np.array([[0,0,0]]*Onum)
+					
+					Or=np.array([[0.1,0.1,0.1]]*Onum)
 					for i in range(Onum):
 						Or[i]=(Ox[i]-cmMSD[0])*L[0]+(Oy[i]-cmMSD[1])*L[1]+(Oz[i]-cmMSD[2])*L[2]
-						OTotal+=np.dot(Or[i],Or[i])
-					Omsd=1/(Onum)*OTotal
+						
+					Omsd=np.linalg.norm(Or)**2/(Onum)
 					po.write(str(time)+" "+str(Omsd)+"\n")
 				time+=0.001
 				linecount+=1
@@ -112,5 +98,6 @@ def subMSD():
 				Ocur=np.append(Ocur,np.array([list(map(float,f.readline().split()))]),axis=0)
 				linecount+=1
 				continue
+
 if __name__ =="__main__":
 	subMSD()
