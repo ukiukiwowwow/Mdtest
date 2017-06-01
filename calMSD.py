@@ -1,7 +1,7 @@
 import copy
 import numpy as np
 def MSD():
-	with open("XDATCAR","r") as f,open("cmMSD","w") as cM,open("MSD","w") as M:
+	with open("XDATCAR","r") as f,open("cmMSD","w") as cM,open("MSD","w") as M,open("r.dat","w") as R:
 		L=np.array([[0]*3]*3)
 		for i in range(7):
 			line=f.readline()
@@ -52,10 +52,12 @@ def MSD():
 					#Simsd=1/(Sinum)*np.dot(Sir,Sir)
 					#ps.write(str(time)+" "+str(Simsd)+"\n")
 					atomr=(r-cmMSD)[:,0].reshape(1,len(r)).T*L[0]+(r-cmMSD)[:,1].reshape(1,len(r)).T*L[1]+(r-cmMSD)[:,2].reshape(1,len(r)).T*L[2]#3*N次元の物を3*N次元にする
-					#atomrがおかしい r,cmMSDは間違いなく同一である。
+					#atomrがおかしい r,cmMSDは間違いなく同一である。Lがおかしかったです
 					temp=0;M.write(str(time)+" ")
 					for i in range(len(atoms)):
 						Latom=atomr[temp:temp+atomnum[i]]#-1?
+						if(i==0):
+							R.write(str(Latom)+"\n")
 						msd=(np.linalg.norm(Latom)**2)/atomnum[i]
 						M.write(str(msd)+" ")#exec('cm{}MSD.write(str(time)+" "+str(msd)+"\n")'.format(i))
 						temp=atomnum[i]#-1?
