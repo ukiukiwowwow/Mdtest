@@ -103,7 +103,7 @@ def cmdiff(flag=1):
 		print("cm-selfdiffusion")
 		cd.write("cm-selfdiffusion\n")
 		with open("XDATCAR","r") as x:
-			L=np.array([[0 for i in range(3)]for j in range(3)])
+			L=np.array([[0.1 for i in range(3)]for j in range(3)])
 			for i in range(7):
 				line=x.readline()
 				if(i==2):
